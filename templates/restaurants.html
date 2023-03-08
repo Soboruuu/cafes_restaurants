@@ -1,0 +1,45 @@
+{% extends 'bootstrap/base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+{% block title %}Restaurants{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Restaurants</h1>
+            <table class="table">
+                <thead>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Map Link</td>
+                <td>Image Link</td>
+                <td>Location</td>
+                <td>Menu</td>
+                <td>Parking</td>
+                <td>Open</td>
+                <td>Close</td>
+                </thead>
+                {% for restaurant in restaurants: %}
+                <tr>
+                    <td>{{ restaurant.id }}</td>
+                    <td>{{ restaurant.name }}</td>
+                    <td><a href="{{ restaurant.map_url }}">NAVER Map</a></td>
+                    <td><a href="{{ restaurant.img_url }}">Image</a></td>
+                    <td>{{ restaurant.location }}</td>
+                    <td>{{  restaurant.menu }}</td>
+                    <td>{{ '✅' if restaurant.parking else '❌' }}</td>
+                    <td>{{ restaurant.open }}</td>
+                    <td>{{ restaurant.close }}</td>
+                    <td><a href="{{ url_for('restaurant_update', id=restaurant.id) }}">Update</a></td>
+                    <td><a href="{{ url_for('delete_restaurant', id=restaurant.id) }}">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+      <p><a href="{{ url_for('home') }}">Return to index page</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}
